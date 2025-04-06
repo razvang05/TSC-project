@@ -116,3 +116,73 @@
   | 102 | U2 | [Link](https://www.snapeda.com/parts/ESP32-C6-WROOM-1-N8/Espressif+Systems/view-part/?ref=eda) | [Datasheet](https://www.snapeda.com/parts/ESP32-C6-WROOM-1-N8/Espressif%20Systems/datasheet/) |
   | 103 | U3 | [Link](https://www.snapeda.com/parts/DS3231SN%23/Analog+Devices/view-part/?ref=eda) | [Datasheet](https://www.snapeda.com/parts/DS3231SN%23/Analog%20Devices/datasheet/) |
   | 104 | U4 | [Link](https://www.snapeda.com/parts/MAX17048G+T10/Analog+Devices/view-part/?ref=eda) | [Datasheet](https://www.snapeda.com/parts/MAX17048G+T10/Analog%20Devices/datasheet/) |
+
+
+  ## ⚙️ Hardware Functionality Description
+
+Dispozitivul eBook Reader este un sistem portabil de citire a cărților electronice, construit în jurul modulului **ESP32-C6-WROOM-1-N8**. Acesta integrează următoarele componente și module:
+
+### 🔌 Module și Funcționalitate
+
+- **ESP32-C6-WROOM-1-N8** — Microcontroler principal cu Wi-Fi și BLE integrat; gestionează comunicația, senzorii și afișajul.
+- **BME688** — Senzor de calitate a aerului și mediu (temperatură, umiditate, presiune, gaz); conectat prin magistrala **I2C**.
+- **DS3231SN** — Modul RTC de înaltă precizie pentru menținerea timpului real; conectat la ESP32 prin **I2C**.
+- **MAX17048** — Monitor de nivel al bateriei cu interfață **I2C**, oferă estimarea SOC (state of charge).
+- **SD Card Module** — Pentru stocarea locală a datelor colectate; conectat prin **SPI**.
+- **Display E-Ink** — Afișaj cu consum redus de energie, interfață **SPI**, include semnale EPD_CS, EPD_DC, EPD_RST, EPD_BUSY.
+- **Memorie NOR Flash W25Q512JVEIQ (64MB)** — Conectată prin **SPI** pentru stocarea firmware-ului sau datelor mari.
+- **Buton BOOT și RESET** — Control GPIO pentru bootloader și resetare sistem.
+- **MCP73831** — Controler pentru încărcare acumulator Li-Po, conectat direct la baterie.
+- **LDO XC6220A331MR-G** — Regulator de tensiune 3.3V pentru alimentarea circuitelor logice.
+- **Port USB-C (USB4110-GF-A)** — Alimentare și interfață serială pentru upload cod și debugging.
+
+### 🔧 Interfețe de Comunicație
+
+| Interfață | Componente conectate |
+|----------|-----------------------|
+| I2C      | BME688, MAX17048, DS3231SN |
+| SPI      | E-Ink Display, SD Card, Flash Memory |
+| UART     | Serial debug prin USB-C (TX/RX) |
+| GPIO     | Butoane, LED-uri, semnale control |
+
+### ⚡ Energie și Alimentare
+
+- Alimentarea se face prin **USB-C** sau baterie Li-Po.
+- Planul de masă este aplicat pe ambele straturi (TOP & BOTTOM).
+- Se folosesc **condensatori de decuplare 100nF** aproape de fiecare pin de alimentare al IC-urilor.
+- Regulatorul LDO oferă 3.3V, iar controlerul MCP73831 gestionează încărcarea bateriei.
+- Funcțiile de **low-power sleep** ale ESP32 sunt folosite pentru a reduce consumul în standby.
+
+## 📌 ESP32-C6 Pin Mapping
+
+| Pin ESP32-C6 | Componentă Legată      | Funcție              |
+|--------------|-------------------------|----------------------|
+| GPIO0        | Flash Memory (DI)       | SPI MOSI             |
+| GPIO1        | Flash Memory (DO)       | SPI MISO             |
+| GPIO2        | Flash CS                | Chip Select          |
+| GPIO3        | Flash HOLD              | Hold/Reset           |
+| GPIO6        | E-Ink Display (EPD_DC)  | Data/Command Select  |
+| GPIO7        | E-Ink Display (EPD_CS)  | Chip Select          |
+| GPIO8        | E-Ink Display (EPD_RST) | Reset                |
+| GPIO9        | E-Ink Display (BUSY)    | Status Feedback      |
+| GPIO10       | SD Card (CS)            | Chip Select          |
+| GPIO11       | SD Card (MOSI)          | Data In              |
+| GPIO12       | SD Card (MISO)          | Data Out             |
+| GPIO13       | SD Card (CLK)           | Clock                |
+| GPIO16/17    | UART                    | Serial TX / RX       |
+| GPIO18/19    | I2C                     | SDA / SCL            |
+| GPIO20       | MAX17048 Alert          | Battery Warning      |
+
+## 🧩 Alte Elemente Relevante pentru Review
+
+- **Design Log**: Înregistrări ale deciziilor de proiectare, erori întâlnite și soluții aplicate.
+- **Imagini randate 3D**: Prezentate în folderul `Images/` și în secțiunea `Mechanical/`.
+- **Plasarea componentelor**: Respectă fișierul de recomandări mecanice, inclusiv alinierea cu carcasa.
+- **Carcasa și Modelul 3D**: Include model complet în Fusion360 și export `.step`, în `Mechanical/`.
+- **Test Pad-uri**: Clar etichetate în silkscreen, prezente pentru semnalele relevante (MOSI, MISO, Rx, etc.).
+- **Silkscreen**: Numele componentelor sunt vizibile și nu sunt suprapuse peste pad-uri.
+
+---
+
+> Toate aceste aspecte sunt conforme cu cerințele OpenBook și ghidurile din laborator. Design-ul a fost verificat prin ERC & DRC, cu toate erorile relevante rezolvate.
+
