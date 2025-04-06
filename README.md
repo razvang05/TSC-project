@@ -1,5 +1,13 @@
 # TSC-project
 
+**Author: Razvan Gheorghe 334CA**
+
+
+## BOM (Bill of Materials)
+
+**Note:** TP-urile au fost construite de mine.
+
+
 | Nr. | Component Name | Procurement Link | Datasheet Link |
 |-----|----------------|------------------|----------------|
 | 1 | BOOT_BUTON | [Link](https://www.snapeda.com/parts/EVQP7L01P/Panasonic%20Electronic%20Components/view-part/?welcome=home) | [Datasheet](https://www.snapeda.com/parts/EVQP7L01P/Panasonic/datasheet/) |
